@@ -1,0 +1,7 @@
+package com.qmakesoft.akita.protocol;
+
+message AkitaMessage {
+    required int32 code = 1;
+    required string messageId = 2;
+    required string message = 3;
+}
