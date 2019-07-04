@@ -27,7 +27,7 @@ public class Task {
 	public void setTaskType(String taskType) {
 		this.taskType = taskType;
 	}
-
+	
 	public String getTaskId() {
 		return taskId;
 	}

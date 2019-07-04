@@ -7,7 +7,7 @@ public class SubProcessNode extends AbstractSinglePathNodeAdapter {
 
 	@Override
 	public void doEvent(CommandContext context) {
-		
+
 	}
 
 }

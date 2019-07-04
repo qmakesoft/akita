@@ -84,5 +84,5 @@ public class NodeHistory {
 	public void setTaskDate(Date taskDate) {
 		this.taskDate = taskDate;
 	}
-
+	
 }

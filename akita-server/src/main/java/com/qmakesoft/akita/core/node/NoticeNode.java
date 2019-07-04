@@ -24,5 +24,4 @@ public class NoticeNode extends AbstractNoPathNodeAdapter implements Participate
 		return "Notice";
 	}
 
-
 }

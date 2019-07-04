@@ -9,10 +9,8 @@ import com.qmakesoft.akita.core.participant.AbstractParticipantHandle;
  */
 public interface Participateable {
 	
-//	List<String> createTask(CommandContext context);
-	
 	AbstractParticipantHandle getParticipantHandle();
 
 	String getTaskType();
-	
+
 }

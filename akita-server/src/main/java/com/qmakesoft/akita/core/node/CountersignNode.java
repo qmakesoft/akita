@@ -25,6 +25,5 @@ public class CountersignNode extends AbstractChoosePathNodeAdapter implements Pa
 	public String getTaskType() {
 		return "Countersign";
 	}
-
 	
 }

@@ -25,11 +25,4 @@ public class WorkNode extends AbstractSinglePathNodeAdapter implements Participa
 		return "Work";
 	}
 
-//	@Override
-//	public List<String> createTask(CommandContext context) {
-//		List<String> participantList = participantHandle.findParticipantList(context.getProcessInstanceId());
-//		context.addEvent(new NewTaskEvent(this,context,participantList));
-//		return participantList;
-//	}
-	
 }
