@@ -66,8 +66,7 @@ public class AkitaClientMessageTemplate {
 		});
 		executorService.execute(task);
 		try {
-			String result = task.get(configuration.getRequestTimeout(), TimeUnit.SECONDS);
-			return result;
+			return task.get(configuration.getRequestTimeout(), TimeUnit.SECONDS);
 		} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			e.printStackTrace();
 		}

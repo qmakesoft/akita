@@ -6,6 +6,7 @@
 	<artifactId>akita</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>akita</name>
+	<packaging>jar</packaging>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -53,14 +54,27 @@
 		    <artifactId>protobuf-java</artifactId>
 		    <version>3.8.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.32</version>
+		</dependency>
 
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

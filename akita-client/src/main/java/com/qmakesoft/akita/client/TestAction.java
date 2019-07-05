@@ -20,9 +20,9 @@ public class TestAction {
 	@RequestMapping(value="hello")
 	public String a(){
 		Protocol.AkitaMessage message = Protocol.AkitaMessage.newBuilder()
-				.setCode(AkitaMessageCodeConstant.REQUEST_MESSAGE)
+				.setCode(1001)
 				.setMessageId(UUID.randomUUID().toString())
-				.setMessage("hello Jerry!")
+				.setMessage("{'processDefinitionCode' : 'processDefinitionCode111'}")
 				.build();
 		return messageTemplate.sendAndReceive(message);
 	}

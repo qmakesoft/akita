@@ -14,6 +14,8 @@ public class AkitaServerConfiguration extends Configuration{
 	
 	private int requestTimeout = 30;
 	
+	private String password = "123456";
+
 	public int getRequestTimeout() {
 		return requestTimeout;
 	}
@@ -38,7 +40,6 @@ public class AkitaServerConfiguration extends Configuration{
 		this.maxConcurrentCount = maxConcurrentCount;
 	}
 	
-	private String password = "123456";
 
 	public String getPassword() {
 		return password;

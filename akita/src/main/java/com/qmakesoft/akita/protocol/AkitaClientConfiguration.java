@@ -12,6 +12,8 @@ public class AkitaClientConfiguration extends Configuration{
 	
 	private int port = 1026111;
 
+	private String password = "123456";
+	
 	public String getHost() {
 		return host;
 	}
@@ -34,8 +36,6 @@ public class AkitaClientConfiguration extends Configuration{
 	public AkitaClientHandler akitaClientHandler(){
 		return new AkitaClientHandler();
 	}
-	
-	private String password = "123456";
 
 	public String getPassword() {
 		return password;

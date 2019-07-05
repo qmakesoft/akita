@@ -1,5 +1,6 @@
 package com.qmakesoft.akita.command.runtime;
 
+import java.util.Map;
 import java.util.UUID;
 
 import com.qmakesoft.akita.command.AbstractCommand;
@@ -24,20 +25,33 @@ public class StartProcessInstanceCommand extends AbstractCommand{
 	String comment;
 	
 	@Override
-	public void execute() {
-		ProcessDefinition processDefinition = ProcessDefinitionManager.getProcessDefinition(processDefinitionCode);
-		String processInstanceId = UUID.randomUUID().toString();
-		processDefinition.nodeManager().startNode().launch(
-			new CommandContext()
-			.processInstanceId(processInstanceId)
-			.processDefinitionCode(processDefinitionCode)
-			.version(version)
-			.operator(operator)
-			.businessForm(businessForm)
-			.businessKey(businessKey)
-			.businessType(businessType)
-			.comment(comment)
-		);
+	public Object execute() {
+//		ProcessDefinition processDefinition = ProcessDefinitionManager.getProcessDefinition(processDefinitionCode);
+//		String processInstanceId = UUID.randomUUID().toString();
+//		processDefinition.nodeManager().startNode().launch(
+//			new CommandContext()
+//			.processInstanceId(processInstanceId)
+//			.processDefinitionCode(processDefinitionCode)
+//			.version(version)
+//			.operator(operator)
+//			.businessForm(businessForm)
+//			.businessKey(businessKey)
+//			.businessType(businessType)
+//			.comment(comment)
+//		);
+		return "start process!";
 	}
+
+	@Override
+	protected void initCommand(Map<String, Object> message) {
+		processDefinitionCode = (String)message.get("processDefinitionCode");
+		version = (String)message.get("version");
+		operator = (String)message.get("operator");
+		businessForm = (String)message.get("businessForm");
+		businessKey = (String)message.get("businessKey");
+		businessType = (String)message.get("businessType");
+		comment = (String)message.get("comment");
+	}
+
 	
 }

@@ -2,6 +2,8 @@ package com.qmakesoft.akita.protocol;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.fastjson.JSON;
+
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -14,6 +16,9 @@ public class AkitaServerHandler extends SimpleChannelInboundHandler<Protocol.Aki
 	
 	@Autowired
 	AkitaServerHeartbeatManager akitaServerHeartbeatManager;
+	
+	@Autowired
+	AkitaServerCommandHandler akitaServerCommandHandler;
 	
 	protected void channelRead0(ChannelHandlerContext ctx, Protocol.AkitaMessage message) throws Exception {
 		//收到客户端的认证请求信息
@@ -42,6 +47,15 @@ public class AkitaServerHandler extends SimpleChannelInboundHandler<Protocol.Aki
 			return;
 		}
 		
+		//业务命令
+		Object obj = akitaServerCommandHandler.execute(message.getCode(), message.getMessage());
+		Protocol.AkitaMessage response = null;
+		response = Protocol.AkitaMessage.newBuilder()
+				.setCode(AkitaMessageCodeConstant.RESPONSE_SUCCESS)
+				.setMessageId(message.getMessageId())
+				.setMessage(JSON.toJSONString(obj))
+				.build();
+		ctx.writeAndFlush(response);
 	}
 
 	private boolean authentication(ChannelHandlerContext ctx,Protocol.AkitaMessage message) {

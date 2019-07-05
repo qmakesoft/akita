@@ -1,0 +1,6 @@
+流程定义：
+	DEFINITION_#processDefinitionId#---------ProcessDefinition
+事件的存储：
+    EVENT_#processInstanceId#----------------Event
+任务列表：
+    TAKS_#participant#-----------------------Task
