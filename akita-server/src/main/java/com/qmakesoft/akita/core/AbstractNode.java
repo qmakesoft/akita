@@ -9,7 +9,7 @@ import com.qmakesoft.akita.command.event.PathEvent;
 
 public abstract class AbstractNode {
 	
-	String code;
+	protected String code;
 	
 	public boolean launch(CommandContext context){
 

@@ -1,4 +1,4 @@
-package com.qmakesoft.akita.core.participant;
+package com.qmakesoft.akita.core.node.participant;
 
 import java.util.List;
 

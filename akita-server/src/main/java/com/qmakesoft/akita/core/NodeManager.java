@@ -14,4 +14,8 @@ public final class NodeManager {
 	public AbstractNode getNode(String nodeCode) {
 		return null;
 	}
+	
+	public void addNode(AbstractNode node) {
+		nodes.add(node);
+	}
 }

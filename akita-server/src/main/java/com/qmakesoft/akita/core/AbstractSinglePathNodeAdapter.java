@@ -9,7 +9,7 @@ public abstract class AbstractSinglePathNodeAdapter extends AbstractNode {
 	public Set<Path> todo(CommandContext context){
 		doEvent(context);
 		ProcessDefinition processDefinition = ProcessDefinitionManager.getProcessDefinition(context.getProcessDefinitionCode());
-		return processDefinition.pathManager().getPaths(this);
+		return processDefinition.pathManager().getPathsBySourceNode(this);
 	}
 	
 	protected abstract void doEvent(CommandContext context);

@@ -3,6 +3,7 @@ package com.qmakesoft.akita.command.runtime;
 import java.util.Map;
 import java.util.UUID;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qmakesoft.akita.command.AbstractCommand;
 import com.qmakesoft.akita.command.CommandContext;
 import com.qmakesoft.akita.core.ProcessDefinition;
@@ -26,20 +27,25 @@ public class StartProcessInstanceCommand extends AbstractCommand{
 	
 	@Override
 	public Object execute() {
-//		ProcessDefinition processDefinition = ProcessDefinitionManager.getProcessDefinition(processDefinitionCode);
-//		String processInstanceId = UUID.randomUUID().toString();
-//		processDefinition.nodeManager().startNode().launch(
-//			new CommandContext()
-//			.processInstanceId(processInstanceId)
-//			.processDefinitionCode(processDefinitionCode)
-//			.version(version)
-//			.operator(operator)
-//			.businessForm(businessForm)
-//			.businessKey(businessKey)
-//			.businessType(businessType)
-//			.comment(comment)
-//		);
-		return "start process!";
+		ProcessDefinition processDefinition = ProcessDefinitionManager.getProcessDefinition(processDefinitionCode);
+		String processInstanceId = UUID.randomUUID().toString();
+		boolean isEnd = processDefinition.nodeManager().startNode().launch(
+			new CommandContext()
+			.processInstanceId(processInstanceId)
+			.processDefinitionCode(processDefinitionCode)
+			.version(version)
+			.operator(operator)
+			.businessForm(businessForm)
+			.businessKey(businessKey)
+			.businessType(businessType)
+			.comment(comment)
+		);
+
+		//组装返回结果
+		JSONObject result = new JSONObject();
+		result.put("processInstanceId", processInstanceId);
+		result.put("isEnd", isEnd);
+		return result;
 	}
 
 	@Override

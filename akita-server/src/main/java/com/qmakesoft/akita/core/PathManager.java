@@ -20,7 +20,7 @@ public final class PathManager {
 	 * @param sourceNode
 	 * @return
 	 */
-	public Set<Path> getPaths(AbstractNode sourceNode){
+	public Set<Path> getPathsBySourceNode(AbstractNode sourceNode){
 		return null;
 	}
 	
@@ -31,6 +31,19 @@ public final class PathManager {
 	 */
 	public Set<Path> getPathsByTargetNode(AbstractNode tragetNode){
 		return null;
+	}
+	
+	public Path getPath(String pathCode) {
+		for(Path path : paths) {
+			if(path.getCode().equals(pathCode)) {
+				return path;
+			}
+		}
+		return null;
+	}
+	
+	public void addPath(Path path) {
+		paths.add(path);
 	}
 }
 

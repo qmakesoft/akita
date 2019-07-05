@@ -3,6 +3,7 @@ package com.qmakesoft.akita.protocol;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -48,12 +49,26 @@ public class AkitaServerHandler extends SimpleChannelInboundHandler<Protocol.Aki
 		}
 		
 		//业务命令
-		Object obj = akitaServerCommandHandler.execute(message.getCode(), message.getMessage());
+		Object obj = null; 
+		try {
+			obj = akitaServerCommandHandler.execute(message.getCode(), message.getMessage());
+		}catch (Exception e) {
+			JSONObject error = new JSONObject();
+			if(e instanceof AkitaException) {
+				error.put("code",  ((AkitaException) e).getCode());
+				error.put("error", ((AkitaException) e).getCode());
+			}else {
+				error.put("code", -1);
+				error.put("error",e.getMessage() == null ? "未定义的服务端异常" : e.getMessage());
+			}
+			obj = error;
+		}
+		String returnMessage = (obj instanceof String) ? (String)obj : JSON.toJSONString(obj);
 		Protocol.AkitaMessage response = null;
 		response = Protocol.AkitaMessage.newBuilder()
 				.setCode(AkitaMessageCodeConstant.RESPONSE_SUCCESS)
 				.setMessageId(message.getMessageId())
-				.setMessage(JSON.toJSONString(obj))
+				.setMessage(returnMessage)
 				.build();
 		ctx.writeAndFlush(response);
 	}
