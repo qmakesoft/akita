@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qmakesoft.akita.protocol.AkitaClientMessageTemplate;
-import com.qmakesoft.akita.protocol.AkitaMessageCodeConstant;
 import com.qmakesoft.akita.protocol.Protocol;
 
 
@@ -20,7 +19,7 @@ public class TestAction {
 	@RequestMapping(value="hello")
 	public String a(){
 		Protocol.AkitaMessage message = Protocol.AkitaMessage.newBuilder()
-				.setCode(1001)
+				.setCode(2001)
 				.setMessageId(UUID.randomUUID().toString())
 				.setMessage("{'processDefinitionCode' : 'processDefinitionCode111'}")
 				.build();

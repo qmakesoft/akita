@@ -56,7 +56,7 @@ public class AkitaServerHandler extends SimpleChannelInboundHandler<Protocol.Aki
 			JSONObject error = new JSONObject();
 			if(e instanceof AkitaException) {
 				error.put("code",  ((AkitaException) e).getCode());
-				error.put("error", ((AkitaException) e).getCode());
+				error.put("error", ((AkitaException) e).getMessage());
 			}else {
 				error.put("code", -1);
 				error.put("error",e.getMessage() == null ? "未定义的服务端异常" : e.getMessage());

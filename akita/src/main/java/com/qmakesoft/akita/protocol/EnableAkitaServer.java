@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({AkitaServer.class,AkitaServerConfiguration.class})
+@Import({EnableAkitaServerConfiguration.class,AkitaServer.class,AkitaServerConfiguration.class,AkitaServerCommandAware.class})
 public @interface EnableAkitaServer {
 
 }
