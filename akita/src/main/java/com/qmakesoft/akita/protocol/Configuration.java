@@ -7,6 +7,26 @@ public class Configuration {
 
 	private int requestTimeout = 30;
 	
+	private int retryTime = 3;
+	
+	private int retryInterval = 500;
+	
+	public int getRetryInterval() {
+		return retryInterval;
+	}
+
+	public void setRetryInterval(int retryInterval) {
+		this.retryInterval = retryInterval;
+	}
+
+	public int getRetryTime() {
+		return retryTime;
+	}
+
+	public void setRetryTime(int retryTime) {
+		this.retryTime = retryTime;
+	}
+
 	public int getRequestTimeout() {
 		return requestTimeout;
 	}

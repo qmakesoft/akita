@@ -3,9 +3,11 @@ package com.qmakesoft.akita.protocol;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+@Sharable
 public class AkitaClientHandler extends SimpleChannelInboundHandler<Protocol.AkitaMessage> {
 
 	@Autowired
@@ -56,7 +58,14 @@ public class AkitaClientHandler extends SimpleChannelInboundHandler<Protocol.Aki
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		System.out.println("====================channelInactive=====================");
 		super.channelInactive(ctx);
 	}
+	
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
+            throws Exception {
+    	System.out.println("====================exceptionCaught=====================");
+    }
 
 }

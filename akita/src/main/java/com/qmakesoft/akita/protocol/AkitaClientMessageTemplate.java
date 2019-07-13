@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -24,6 +24,9 @@ public class AkitaClientMessageTemplate {
 	
 	@Autowired
 	Configuration configuration;
+	
+	@Autowired
+	AkitaClient akitaClient;
 
 	ExecutorService executorService;
 	
@@ -31,9 +34,14 @@ public class AkitaClientMessageTemplate {
 	
 	void init(ChannelFuture channelFuture) {
 		this.channelFuture = channelFuture;
-		executorService = Executors.newFixedThreadPool(
-				configuration.getMaxConcurrentCount());
+		if(executorService == null) {
+			executorService = Executors.newFixedThreadPool(configuration.getMaxConcurrentCount());
+		}
 	}
+	
+	private boolean isReady() {
+		return channelFuture != null && channelFuture.channel().isActive() && executorService != null;
+	} 
 
 	public void putMessage(Protocol.AkitaMessage akitaMessage){
 		String messageId = akitaMessage.getMessageId();
@@ -48,29 +56,53 @@ public class AkitaClientMessageTemplate {
 		}
 	}
 	
-	public String sendAndReceive(Protocol.AkitaMessage akitaMessage){
-		FutureTask<String> task = new FutureTask<String>(new Callable<String>() {
+	public String sendAndReceive(Protocol.AkitaMessage akitaMessage) throws Exception {
+		Callable<String> task = new Callable<String>() {
 			@Override
 			public String call() throws Exception {
 				String messageId = akitaMessage.getMessageId();
-				channelFuture.channel().writeAndFlush(akitaMessage);
 				BlockingQueue<Protocol.AkitaMessage> serverMessageQueue = new LinkedBlockingQueue<Protocol.AkitaMessage>(1);
-				responseMap.put(messageId, serverMessageQueue);
 				try{
-					AkitaMessage serverMessage = serverMessageQueue.take();
+					responseMap.put(messageId, serverMessageQueue);
+					channelFuture.channel().writeAndFlush(akitaMessage);
+					AkitaMessage serverMessage = serverMessageQueue.poll(configuration.getRequestTimeout(),TimeUnit.SECONDS);
 					return serverMessage.getMessage();
 				}finally{
 					responseMap.remove(messageId);
 				}
 			}
-		});
-		executorService.execute(task);
+		};
 		try {
-			return task.get(configuration.getRequestTimeout(), TimeUnit.SECONDS);
+			if(isReady()) {
+				Future<String> future = executorService.submit(task);
+				return future.get(configuration.getRequestTimeout(), TimeUnit.SECONDS);
+			}else {
+				retryConnect();
+				return sendAndReceive(akitaMessage);
+			}
 		} catch (InterruptedException | ExecutionException | TimeoutException e) {
-			e.printStackTrace();
+			throw e;
 		}
-		return null;
 	}
 	
+	private void retryConnect() throws TimeoutException {
+		int i = 0;
+		while(!isReady() && i < configuration.getRetryTime()) {
+			try {
+				akitaClient.syncConnect();
+			}catch (Exception e) {
+				//
+			}
+			if(isReady()) {
+				return ;
+			}
+			i++;
+			try {
+				Thread.sleep(configuration.getRetryInterval());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		throw new TimeoutException("timeout");
+	}
 }
