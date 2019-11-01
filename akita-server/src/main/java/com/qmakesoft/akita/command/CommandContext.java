@@ -2,13 +2,18 @@ package com.qmakesoft.akita.command;
 
 import java.util.List;
 
-import com.qmakesoft.akita.command.event.Event;
+import com.qmakesoft.akita.command.event.AbstractEvent;
 
+/**
+ * 
+ * @author Jerry.Zhao
+ *
+ */
 public class CommandContext {
 	//一个context只服务于一个command
 	//##这里要包含客户端对应的信息，通讯Channel  --这里似乎不用加这个，这个是命令执行完以后做的事情
 	//事件管理器  ,  一个命令的执行可能会产生多个事件的发生，每个事件对应着数据的变化，及流程的变化、节点的变化	
-	protected List<Event> eventList;
+	protected List<AbstractEvent> eventList;
 	
 	protected String processInstanceId;
 	
@@ -68,7 +73,7 @@ public class CommandContext {
 		return this;
 	}
 	
-	public List<Event> getEventList() {
+	public List<AbstractEvent> getEventList() {
 		return eventList;
 	}
 
@@ -100,7 +105,7 @@ public class CommandContext {
 		return comment;
 	}
 	
-	public void addEvent(Event event) {
+	public void addEvent(AbstractEvent event) {
 		this.eventList.add(event);
 	}
 

@@ -9,7 +9,7 @@ import com.qmakesoft.akita.core.AbstractNode;
 import com.qmakesoft.akita.model.NodeHistory;
 import com.qmakesoft.akita.model.Task;
 
-public class NodeHistoryEvent extends Event{
+public class NodeHistoryEvent extends AbstractEvent{
 
 	public NodeHistoryEvent(AbstractNode node,CommandContext context) {
 		super(node,context);

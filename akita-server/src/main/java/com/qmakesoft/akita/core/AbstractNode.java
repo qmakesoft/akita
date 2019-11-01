@@ -7,6 +7,11 @@ import com.qmakesoft.akita.command.CommandContext;
 import com.qmakesoft.akita.command.event.NewTaskEvent;
 import com.qmakesoft.akita.command.event.PathEvent;
 
+/**
+ * 
+ * @author Jerry.Zhao
+ *
+ */
 public abstract class AbstractNode {
 	
 	protected String code;
@@ -42,6 +47,11 @@ public abstract class AbstractNode {
 		return end;
 	}
 	
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
 	protected abstract Set<Path> todo(CommandContext context);
 
 	public String getCode() {
@@ -50,6 +60,25 @@ public abstract class AbstractNode {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+	
+	@Override
+	public int hashCode() {
+		return code.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		
+		if(!(obj instanceof AbstractNode)) {
+			return false;
+		}
+		
+		AbstractNode node2 = ((AbstractNode)obj);
+		return code.equals(node2.code);
 	}
 	
 }

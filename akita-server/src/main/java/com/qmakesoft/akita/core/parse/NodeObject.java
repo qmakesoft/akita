@@ -2,93 +2,215 @@ package com.qmakesoft.akita.core.parse;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Jerry.Zhao
+ *
+ */
 public class NodeObject {
 	
-	String type;//节点的类型，设计时考虑用户扩展的类型
+	/**
+	 * 节点的类型，设计时考虑用户扩展的类型
+	 */
+	String type;
 	
 	String code;
 	
-	Integer width; //: 宽度|数字
+	/**
+	 * 宽度|数字
+	 */
+	Integer width; 
 	
-	Integer height;//:  高度|数字,
+	/**
+	 *  高度|数字,
+	 */
+	Integer height;
 	
-	Integer positionX;
+	Integer xPosition;
 	
-	Integer positionY;
+	Integer yPosition;
 	
-	List<String> enterEvents;//事件,执行过节点后去触发的事件
+	/**
+	 * 事件,执行过节点后去触发的事件
+	 */
+	List<String> enterEvents;
 	
-	List<String> leaveEvents;//事件,执行过节点后去触发的事件
+	/**
+	 * 事件,执行过节点后去触发的事件
+	 */
+	List<String> leaveEvents;
 	
 	//////////////////////////单任务节点//////////////////////////////////////
 	
 	String participantType;
 	
-	Boolean rejectPoint;//标记该节点是否一个可以接受驳回的点
-	
-	List<String> rejectPoints;//驳回时能够选择的驳回节点列表
-	
-	Boolean rejectAble;//标记该节点是否能够做驳回操作
-	
-	String rejectType;//单步执行/直接跳转
-	
-	List<String> workFlags;//任务标志
-	
-	String competitionType;//系统分配，参与者抢收，参与者抢办
-	
-	String competitionHandler;//当为系统分配时，选择竞争算法，默认为随机
-	
-	Boolean transferAble;//在这个节点是否可以转办操作
+	/**
+	 * 标记该节点是否一个可以接受驳回的点
+	 */
+	Boolean rejectPoint;
+	/**
+	 * 驳回时能够选择的驳回节点列表
+	 */
+	List<String> rejectPoints;
+	/**
+	 * 标记该节点是否能够做驳回操作
+	 */
+	Boolean rejectAble;
+	/**
+	 * 单步执行/直接跳转
+	 */
+	String rejectType;
+	/**
+	 * 任务标志
+	 */
+	List<String> workFlags;
+	/**
+	 * 系统分配，参与者抢收，参与者抢办
+	 */
+	String competitionType;
+	/**
+	 * 当为系统分配时，选择竞争算法，默认为随机
+	 */
+	String competitionHandler;
+	/**
+	 * 在这个节点是否可以转办操作
+	 */
+	Boolean transferAble;
 	
 	////////////////////////////以下适用普通任务和会签任务///////////////////
 	
-	Boolean supportAble;//是否可以加签支持协助
-	
-	String findParticipantHandler;//必选下拉|根据扩展接口获取内容
-	
-	String noParticipantHandler;//必选下拉,没有找到处理人时|交管理员处理/提示错误/跳过此节点
-	
-	String repeatParticipantHandler;//必选下拉,处理人重复处理时|跳过此节点/不做处理
-	
-	Integer deadline;//期限|正整数
-	String deadlineDateUnit;//描述期限的计量单位 （默认以分钟为单位）| 分钟/小时/天
-	String timeoutHandler;//达到期限后处理方式|跳过此节点/不做处理
+	/**
+	 * 是否可以加签支持协助
+	 */
+	Boolean supportAble;
+	/**
+	 * 必选下拉|根据扩展接口获取内容
+	 */
+	String findParticipantHandler;
+	/**
+	 * 必选下拉,没有找到处理人时|交管理员处理/提示错误/跳过此节点
+	 */
+	String noParticipantHandler;
+	/**
+	 * 必选下拉,处理人重复处理时|跳过此节点/不做处理
+	 */
+	String repeatParticipantHandler;
+	/**
+	 * 期限|正整数
+	 */
+	Integer deadline;
+	/**
+	 * 描述期限的计量单位 （默认以分钟为单位）| 分钟/小时/天
+	 */
+	String deadlineDateUnit;
+	/**
+	 * 达到期限后处理方式|跳过此节点/不做处理
+	 */
+	String timeoutHandler;
 	
 	//进入该节点后设置过多久提醒
-	Boolean remindFirst;//接收任务后提醒first , true/false
-	Integer remindFirstTime;//任务创建后多长时间触发首次的提醒 | 正整数
-	String remindFirstDateUnit;//描述remindFirstTime的计量单位（默认以分钟为单位）| 分钟/小时/天
-
-	Boolean remindLast;// 即将超时提醒last,     true/false
-	Integer remindLastTime;// :任务即将到期前多长时间触发最后的提醒 | 正整数
-	String remindLastDateUnit;// : 描述remindLastTime的计量单位（默认以分钟为单位）| 分钟/小时/天
-
-	String noticeHandler;// 通知处理人处理器|短信/邮件/其他
-	String noticeFindParticipantHandler;//要通知的人
-	Boolean noticeOnFirst;//当进入到该节点时提醒发起人 | true,false
-	Boolean noticeOnProcessed;//处理结束后是否通知发起人| true,false
-	Boolean noticeOnTimeout;//当节点超时通知发起人| true,false
+	
+	/**
+	 * 接收任务后提醒first , true/false
+	 */
+	Boolean remindFirst;
+	/**
+	 * 任务创建后多长时间触发首次的提醒 | 正整数
+	 */
+	Integer remindFirstTime;
+	/**
+	 * 描述remindFirstTime的计量单位（默认以分钟为单位）| 分钟/小时/天
+	 */
+	String remindFirstDateUnit;
+	/**
+	 * 即将超时提醒last,true/false
+	 */
+	Boolean remindLast;
+	/**
+	 * 任务即将到期前多长时间触发最后的提醒 | 正整数
+	 */
+	Integer remindLastTime;
+	/**
+	 * 描述remindLastTime的计量单位（默认以分钟为单位）| 分钟/小时/天
+	 */
+	String remindLastDateUnit;
+	/**
+	 * 通知处理人处理器|短信/邮件/其他
+	 */
+	String noticeHandler;
+	/**
+	 * 要通知的人
+	 */
+	String noticeFindParticipantHandler;
+	/**
+	 * 当进入到该节点时提醒发起人 | true,false
+	 */
+	Boolean noticeOnFirst;
+	/**
+	 * 处理结束后是否通知发起人| true,false
+	 */
+	Boolean noticeOnProcessed;
+	/**
+	 * 当节点超时通知发起人| true,false
+	 */
+	Boolean noticeOnTimeout;
 	
 	///////////////////////////会签任务//////////////////////////////////////////
-	String countersignHandler;//下拉必须|一票通过,一票否决，投票模式(少数服从多数)，人工判断
-	Boolean order;//顺序执行|true/false
+	/**
+	 * 下拉必须|一票通过,一票否决，投票模式(少数服从多数)，人工判断
+	 */
+	String countersignHandler;
+	/**
+	 * 顺序执行|true/false
+	 */
+	Boolean order;
 	
 	///////////////////////////程序节点//////////////////////////////////////////
-	Integer executeIntervalTime;//间隔时间执行|正整数，0表示立即执行
-	String executeIntervalDateUnit;//描述intervalTime的计量单位
-	String applicationHandler;//：程序的处理器//可以去实现如代码拉取，编译等程序动作
-	String contextJsonParams;//程序执行时的上下文参数
-	String errorHandler;//出错处理|跳过此节点/设置流程异常等待管理员处理
-	Integer retryTimes;//重试次数|正整数
-	Integer retryIntervalTime;//重试间隔时长 |正整数，0表示立即
-	String retryIntervalDateUnit;//：重试间隔时长的计量单位
-	
+	/**
+	 * 间隔时间执行|正整数，0表示立即执行
+	 */
+	Integer executeIntervalTime;
+	/**
+	 * 描述intervalTime的计量单位
+	 */
+	String executeIntervalDateUnit;
+	/**
+	 * 程序的处理器//可以去实现如代码拉取，编译等程序动作
+	 */
+	String applicationHandler;
+	/**
+	 * 程序执行时的上下文参数
+	 */
+	String contextJsonParams;
+	/**
+	 * 出错处理|跳过此节点/设置流程异常等待管理员处理
+	 */
+	String errorHandler;
+	/**
+	 * 重试次数|正整数
+	 */
+	Integer retryTimes;
+	/**
+	 * 重试间隔时长 |正整数，0表示立即
+	 */
+	Integer retryIntervalTime;
+	/**
+	 * 重试间隔时长的计量单位
+	 */
+	String retryIntervalDateUnit;
 	/////////////////////////////决策判断//////////////////////////////////////////
-	String decisionType;//Groovy脚本|Handler应用程序
-	
-	String groovyScript;//脚本内容
-	
-	String decisionHandler;//应用程序内容
+	/**
+	 * Groovy脚本|Handler应用程序
+	 */
+	String decisionType;
+	/**
+	 * 脚本内容
+	 */
+	String groovyScript;
+	/**
+	 * 应用程序内容
+	 */
+	String decisionHandler;
 
 	public String getType() {
 		return type;
@@ -122,20 +244,20 @@ public class NodeObject {
 		this.height = height;
 	}
 
-	public Integer getPositionX() {
-		return positionX;
+	public Integer getxPosition() {
+		return xPosition;
 	}
 
-	public void setPositionX(Integer positionX) {
-		this.positionX = positionX;
+	public void setxPosition(Integer xPosition) {
+		this.xPosition = xPosition;
 	}
 
-	public Integer getPositionY() {
-		return positionY;
+	public Integer getyPosition() {
+		return yPosition;
 	}
 
-	public void setPositionY(Integer positionY) {
-		this.positionY = positionY;
+	public void setyPosition(Integer yPosition) {
+		this.yPosition = yPosition;
 	}
 
 	public List<String> getEnterEvents() {

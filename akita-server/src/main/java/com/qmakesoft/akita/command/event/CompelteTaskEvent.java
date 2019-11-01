@@ -4,7 +4,7 @@ import com.qmakesoft.akita.command.CommandContext;
 import com.qmakesoft.akita.command.event.cache.SimpleCache;
 import com.qmakesoft.akita.core.AbstractNode;
 
-public class CompelteTaskEvent extends Event {
+public class CompelteTaskEvent extends AbstractEvent {
 	
 	public CompelteTaskEvent(AbstractNode node, CommandContext context) {
 		super(node, context);

@@ -5,10 +5,10 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qmakesoft.akita.command.AkitaTransaction;
 import com.qmakesoft.akita.command.deploy.DeployCommand.Params;
 import com.qmakesoft.akita.core.parse.ProcessDefinitionHelper;
 import com.qmakesoft.akita.protocol.AbstractCommand;
+import com.qmakesoft.akita.protocol.transaction.AkitaTransaction;
 
 @Component
 public class DeployCommand extends AbstractCommand<Params> implements AkitaTransaction {

@@ -5,12 +5,12 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qmakesoft.akita.command.AkitaTransaction;
 import com.qmakesoft.akita.command.CommandContext;
 import com.qmakesoft.akita.command.runtime.StartProcessInstanceCommand.Params;
 import com.qmakesoft.akita.core.ProcessDefinition;
 import com.qmakesoft.akita.core.ProcessDefinitionManager;
 import com.qmakesoft.akita.protocol.AbstractCommand;
+import com.qmakesoft.akita.protocol.transaction.AkitaTransaction;
 
 @Component
 public class StartProcessInstanceCommand extends AbstractCommand<Params> implements AkitaTransaction{

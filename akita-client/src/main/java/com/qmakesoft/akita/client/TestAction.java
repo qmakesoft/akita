@@ -17,7 +17,7 @@ public class TestAction {
 	AkitaClientMessageTemplate messageTemplate;
 	
 	@RequestMapping(value="hello")
-	public String a(){
+	public String hello() throws Exception{
 		Protocol.AkitaMessage message = Protocol.AkitaMessage.newBuilder()
 				.setCode(2001)
 				.setMessageId(UUID.randomUUID().toString())

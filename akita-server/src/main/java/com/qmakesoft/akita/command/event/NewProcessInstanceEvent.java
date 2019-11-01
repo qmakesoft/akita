@@ -9,7 +9,7 @@ import com.qmakesoft.akita.command.event.cache.SimpleCache;
 import com.qmakesoft.akita.core.AbstractNode;
 import com.qmakesoft.akita.model.ProcessInstance;
 
-public class NewProcessInstanceEvent extends Event{
+public class NewProcessInstanceEvent extends AbstractEvent{
 	
 	Logger logger = Logger.getLogger(NewProcessInstanceEvent.class.getName());
 	

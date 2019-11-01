@@ -6,7 +6,7 @@ import com.qmakesoft.akita.core.AbstractNode;
 import com.qmakesoft.akita.core.Path;
 import com.qmakesoft.akita.model.PathHistory;
 
-public class PathEvent extends Event {
+public class PathEvent extends AbstractEvent {
 
 	Path path;
 	

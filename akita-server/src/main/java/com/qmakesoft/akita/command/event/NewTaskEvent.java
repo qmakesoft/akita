@@ -9,7 +9,7 @@ import com.qmakesoft.akita.command.event.cache.SimpleCache;
 import com.qmakesoft.akita.core.AbstractNode;
 import com.qmakesoft.akita.model.Task;
 
-public class NewTaskEvent extends Event{
+public class NewTaskEvent extends AbstractEvent{
 
 	List<String> participantList;
 	

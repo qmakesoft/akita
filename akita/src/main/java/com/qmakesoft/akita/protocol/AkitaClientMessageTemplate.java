@@ -1,5 +1,6 @@
 package com.qmakesoft.akita.protocol;
 
+import java.net.ConnectException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -98,33 +99,11 @@ public class AkitaClientMessageTemplate {
 			if(isReady()) {
 				Future<String> future = executorService.submit(task);
 				return future.get(configuration.getRequestTimeout(), TimeUnit.SECONDS);
-			}else {
-				retryConnect();
-				return sendAndReceive(akitaMessage);
 			}
+			throw new ConnectException("没有连接上服务器");
 		} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			throw e;
 		}
 	}
 	
-	private void retryConnect() throws TimeoutException {
-		int i = 0;
-		while(!isReady() && i < configuration.getRetryTime()) {
-			try {
-				akitaClient.syncConnect();
-			}catch (Exception e) {
-				//
-			}
-			if(isReady()) {
-				return ;
-			}
-			i++;
-			try {
-				Thread.sleep(configuration.getRetryInterval());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		throw new TimeoutException("timeout");
-	}
 }

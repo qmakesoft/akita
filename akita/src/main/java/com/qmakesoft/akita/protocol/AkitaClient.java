@@ -1,10 +1,8 @@
 package com.qmakesoft.akita.protocol;
 
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -44,17 +42,14 @@ public class AkitaClient {
 	@Autowired
 	AkitaClientMessageTemplate messageTemplate;
 	
-	Thread akitaClientThread = null;
-	
 	ChannelFuture future = null;
 	
 	/**
-	 * 初始化线程池
+	 * 单一线程池，如果服务断开，会每隔10秒重新连接
 	 */
 	ExecutorService executorService = new ThreadPoolExecutor(1, 1,
             0L, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<Runnable>(),new NameTreadFactory());
-	
 	/**
 	 *  自定义名称的线程工厂
 	 * @author Jerry.Zhao
@@ -68,61 +63,59 @@ public class AkitaClient {
         }
     }
 	
-	public AkitaClient(){
-		doConnect();
+	public AkitaClient() throws InterruptedException, ExecutionException, TimeoutException{
+		connect();
 	}
 	
-	public void syncConnect() throws InterruptedException, ExecutionException, TimeoutException {
-		Callable<Void> syncConnectCallable = new Callable<Void>() {
-			@Override
-			public Void call() throws Exception {
-				System.out.println("=================================");
-				doConnect();
-				System.out.println("=================================");
-				return null;
-			}
-		};
-		Future<Void> connectFuture = executorService.submit(syncConnectCallable);
-		connectFuture.get(10, TimeUnit.SECONDS);
-	}
-	
-	public void doConnect() {
-		if(akitaClientThread != null && akitaClientThread.isAlive()) {
-			return ;
-		}
+	public void connect() {
 		executorService.submit(new Runnable() {
 			@Override
 			public void run() {
-				EventLoopGroup group = null;
-				try {
-					group = new NioEventLoopGroup();
-					Bootstrap b = new Bootstrap();
-					b.group(group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true)
-							.handler(new ChannelInitializer<SocketChannel>() {
-								@Override
-								public void initChannel(SocketChannel ch) throws Exception {
-									ch.pipeline().addLast(new IdleStateHandler(5,0,0));
-									ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(1024, 0, 4, 0, 4));
-							        //这里是收到服务端发过来的消息,所以是对服务端的response解码
-							        ch.pipeline().addLast(new ProtobufDecoder(Protocol.AkitaMessage.getDefaultInstance()));
-							        // encoded
-							        ch.pipeline().addLast(new LengthFieldPrepender(4));
-							        ch.pipeline().addLast(new ProtobufEncoder());
-									ch.pipeline().addLast(akitaClientHandler);
-								}
-							});
-					future = b.connect(akitaClientConfiguration.getHost(), akitaClientConfiguration.getPort()).sync();
-					messageTemplate.init(future);
-					future.channel().closeFuture().sync();
-				} catch (InterruptedException e) {
-					//服务器连接失败
-					e.printStackTrace();
-				} finally {
-					group.shutdownGracefully();
-					System.out.println("============shutdown============");
+				while(true) {
+					try {
+						doConnect();
+					}catch (Exception e) {
+						//连接异常结束
+					}
+					try {
+						Thread.sleep(10000l);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});
+	}
+	
+	private void doConnect() {
+		EventLoopGroup group = null;
+		try {
+			group = new NioEventLoopGroup();
+			Bootstrap b = new Bootstrap();
+			b.group(group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true)
+				.handler(new ChannelInitializer<SocketChannel>() {
+					@Override
+					public void initChannel(SocketChannel ch) throws Exception {
+						ch.pipeline().addLast(new IdleStateHandler(5,0,0));
+						ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(1024, 0, 4, 0, 4));
+				        //这里是收到服务端发过来的消息,所以是对服务端的response解码
+				        ch.pipeline().addLast(new ProtobufDecoder(Protocol.AkitaMessage.getDefaultInstance()));
+				        // encoded
+				        ch.pipeline().addLast(new LengthFieldPrepender(4));
+				        ch.pipeline().addLast(new ProtobufEncoder());
+						ch.pipeline().addLast(akitaClientHandler);
+					}
+				});
+			future = b.connect(akitaClientConfiguration.getHost(), akitaClientConfiguration.getPort()).sync();
+			messageTemplate.init(future);
+			future.channel().closeFuture().sync();
+		} catch (InterruptedException e) {
+			//服务器连接失败
+			e.printStackTrace();
+		} finally {
+			group.shutdownGracefully();
+		}
+	
 	}
 
 }
