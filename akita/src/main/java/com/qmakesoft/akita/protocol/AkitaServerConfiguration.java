@@ -5,6 +5,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+/**
+  * 服务端配置
+ * @author Jerry.Zhao
+ *
+ */
 @ConfigurationProperties(prefix="akita.server")
 public class AkitaServerConfiguration extends Configuration{
 	
@@ -16,10 +21,12 @@ public class AkitaServerConfiguration extends Configuration{
 	
 	private String password = "123456";
 
+	@Override
 	public int getRequestTimeout() {
 		return requestTimeout;
 	}
-
+	
+	@Override
 	public void setRequestTimeout(int requestTimeout) {
 		this.requestTimeout = requestTimeout;
 	}
@@ -32,10 +39,12 @@ public class AkitaServerConfiguration extends Configuration{
 		this.port = port;
 	}
 
+	@Override
 	public int getMaxConcurrentCount() {
 		return maxConcurrentCount;
 	}
 
+	@Override
 	public void setMaxConcurrentCount(int maxConcurrentCount) {
 		this.maxConcurrentCount = maxConcurrentCount;
 	}

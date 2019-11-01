@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
 
+/**
+  * 服务端接收到自定义协议的请求处理类
+ * @author Jerry.Zhao
+ *
+ */
 public class AkitaServerCommandHandler {
 
 	@Autowired

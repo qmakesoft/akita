@@ -1,5 +1,10 @@
 package com.qmakesoft.akita.protocol;
 
+/**
+ * 
+ * @author Jerry.Zhao
+ *
+ */
 public class AkitaException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
@@ -18,6 +23,7 @@ public class AkitaException extends RuntimeException{
 		return code;
 	}
 	
+	@Override
 	public String getMessage() {
 		return message;
 	}

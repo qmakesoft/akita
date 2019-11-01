@@ -7,6 +7,11 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+/**
+ * 
+ * @author Jerry.Zhao
+ *
+ */
 @Sharable
 public class AkitaClientHandler extends SimpleChannelInboundHandler<Protocol.AkitaMessage> {
 
@@ -19,6 +24,7 @@ public class AkitaClientHandler extends SimpleChannelInboundHandler<Protocol.Aki
 	@Autowired
 	AkitaClientMessageTemplate akitaMessageTemplate;
 	
+	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Protocol.AkitaMessage akitaMessage) throws Exception {
 		//服务器心跳检查，回复服务端心跳
 		if(akitaMessage.getCode() == AkitaMessageCodeConstant.HEARTBEAT){

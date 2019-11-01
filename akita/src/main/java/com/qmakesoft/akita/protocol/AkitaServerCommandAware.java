@@ -9,8 +9,13 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+/**
+ * spring boot加载完成后，把实现了AbstractCommand抽象类的command处理器加入到commandMap中管理，其中key值AbstractCommand中要求返回code
+ * @author Jerry.Zhao
+ *
+ */
 public class AkitaServerCommandAware implements ApplicationContextAware{
-
+	
 	public Map<Integer,AbstractCommand<Object>> commandMap = new HashMap<Integer, AbstractCommand<Object>>();
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -23,5 +28,4 @@ public class AkitaServerCommandAware implements ApplicationContextAware{
 			commandMap.put(command.code(), command);
 		}
 	}
-
 }

@@ -9,6 +9,11 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+/**
+ * 
+ * @author Jerry.Zhao
+ *
+ */
 @Sharable
 public class AkitaServerHandler extends SimpleChannelInboundHandler<Protocol.AkitaMessage> {
 	
@@ -21,6 +26,7 @@ public class AkitaServerHandler extends SimpleChannelInboundHandler<Protocol.Aki
 	@Autowired
 	AkitaServerCommandHandler akitaServerCommandHandler;
 	
+	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Protocol.AkitaMessage message) throws Exception {
 		//收到客户端的认证请求信息
 		if(message.getCode() == AkitaMessageCodeConstant.REQUEST_AUTHENTICATION){
